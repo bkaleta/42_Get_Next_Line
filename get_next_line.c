@@ -6,16 +6,16 @@
 /*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:49:30 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/04/24 13:43:53 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/04/24 14:50:36 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_readline(int fd, char *buffor, char *rest)
+static char	*ft_wholeline(int fd, char *buffor, char *rest)
 {
 	int		i;
-	char	*tmp;
+	char	*char_temp;
 
 	i = 1;
 	while (i != '\0')
@@ -28,11 +28,11 @@ static char	*ft_readline(int fd, char *buffor, char *rest)
 		buffor[i] = '\0';
 		if (!rest)
 			rest = ft_strdup("");
-		tmp = rest;
-		rest = ft_strjoin(tmp, buffor);
-		free(tmp);
-		tmp = NULL;
-		if (ft_strchr(buffor, '\n'))
+		char_temp = rest;
+		rest = ft_strjoin(char_temp, buffor);
+		free(char_temp);
+		char_temp = NULL;
+		if (ft_strchr (buffor, '\n'))
 			break ;
 	}
 	return (rest);
@@ -43,6 +43,7 @@ static char	*ft_trim(char *line)
 	size_t	count;
 	char	*rest;
 
+	count = 0;
 	while (line[count] != '\n' && line[count] != '\0')
 		count++;
 	if (line[count] == '\0' || line[1] == '\0')
@@ -65,10 +66,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	buffor = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	buffor = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffor)
 		return (0);
-	line = ft_readline(fd, buffor, rest);
+	line = ft_wholeline(fd, buffor, rest);
 	free(buffor);
 	buffor = NULL;
 	if (!line)
