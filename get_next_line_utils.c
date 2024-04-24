@@ -6,7 +6,7 @@
 /*   By: bkaleta <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 10:49:35 by bkaleta           #+#    #+#             */
-/*   Updated: 2024/04/24 12:12:26 by bkaleta          ###   ########.fr       */
+/*   Updated: 2024/04/24 12:56:31 by bkaleta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	ft_strlen(const char *str)
 
 char	*ft_strdup(const char *str)
 {
-	int		i;
 	char	*dup;
+	int		i;
 
-	i = 0;
 	dup = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!dup)
 		return (NULL);
+	i = 0;
 	while (str[i])
 	{
 		dup[i] = str[i];
@@ -48,15 +48,13 @@ char	*ft_strdup(const char *str)
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
+	char	*s3;
 	int		i;
 	int		j;
-	char	*s3;
 
 	s3 = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!s3)
 		return (NULL);
-	i = 0;
-	j = 0;
 	while (s1[i])
 	{
 		s3[i] = s1[i];
@@ -86,9 +84,24 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
-	char	*rest_str;
+	char	*rest;
 	int		i;
 	int		j;
 
-	rest_str = (char *)malloc(sizeof(char) * (len + 1));
+	rest = (char *)malloc(sizeof(char) * (len + 1));
+	if (!rest)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (i >= start && j < len)
+		{
+			rest[j] = s[i];
+			j++;
+		}
+		i++;
+	}
+	rest[j] = '\0';
+	return (rest);
 }
